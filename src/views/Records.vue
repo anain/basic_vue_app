@@ -4,7 +4,7 @@
         id="record-description"
         @submit.prevent="saveRecord"
     >
-    <label for="address">Adresse ou mieu du signalement</label><br/>
+    <label for="address">Adresse ou lieu du signalement</label><br/>
     <textarea id="address" v-model="address" name="address" placeholder="Ex: 1 Cours de la Marne, Bordeaux"></textarea><br/>
     <label for="description">Description de la situation</label><br/>
     <textarea id="description" v-model="description" name="description" placeholder="2 personnes en situation de malnutrition"></textarea><br/>
