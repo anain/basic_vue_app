@@ -4,10 +4,10 @@
         id="record-description"
         @submit.prevent="saveRecord"
     >
-    <label for="address">Adresse ou lieu du signalement</label><br/>
-    <textarea id="address" v-model="address" name="address" placeholder="Ex: 1 Cours de la Marne, Bordeaux"></textarea><br/>
-    <label for="description">Description de la situation</label><br/>
-    <textarea id="description" v-model="description" name="description" placeholder="2 personnes en situation de malnutrition"></textarea><br/>
+    <label for="address">Adresse ou lieu du signalement</label><br>
+    <textarea id="address" v-model="address" name="address" placeholder="Ex: 1 Cours de la Marne, Bordeaux"></textarea><br>
+    <label for="description">Description de la situation</label><br>
+    <textarea id="description" v-model="description" name="description" placeholder="2 personnes en situation de malnutrition"></textarea><br>
     <button type="submit">Envoyer</button>
     </form>
   </div>
@@ -27,16 +27,28 @@ export default {
       description: ''
     }
   },
+  mounted() {
+    if (localStorage.username) {
+      this.author = localStorage.username;
+    }
+  },
   methods : {
     async saveRecord() {
-      const docRef = await addDoc(collection(db, "records"), {
+      if (this.author == '') {
+        alert('Vous devez vous identifier pour pouvoir envoyer un signalement.')
+        this.$router.push('/')
+      }
+      else {
+        await addDoc(collection(db, "records"), {
         author: this.author,
         adress: this.address,
         description: this.description,
         timestamp: Date.now()
         })
-      console.log("Document written with ID: ", docRef.id)
+        this.description = '',
+        this.address = ''
       }
+    }
   }
 }
 
