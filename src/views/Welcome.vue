@@ -5,7 +5,8 @@
         @submit.prevent="saveName"
     >
       <p>Bonjour ! Qui êtes-vous ?</p>
-      <input v-model.trim="username"> 
+      <input v-model.trim="username" placeholder="nom"><br>
+      <button type="submit">Envoyer</button>
     </form>
   </div>
 </template>
@@ -15,12 +16,18 @@
 export default {
   data () {
       return {
-      username: 'nom'
+      username: ''
+    }
+  },
+  mounted() {
+    if (localStorage.username) {
+      this.username = localStorage.username;
     }
   },
   methods : {
     saveName() {
-      alert('Bonjour' + this.username)
+      alert('Bonjour ' + this.username)
+      localStorage.username = this.username;
       this.$router.push('records')
     }
   }
@@ -32,6 +39,10 @@ export default {
 
 #welcome {
   font-size: 25px;
+}
+
+form {
+  max-width: 100%;
 }
 
 input { 
